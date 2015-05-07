@@ -5,4 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Buttons at bottm -->
+    <string name="btn_myReview">My Review</string>
+    <string name="btn_all">All</string>
+    <string name="btn_signUp">Sign Up</string>
+
 </resources>
