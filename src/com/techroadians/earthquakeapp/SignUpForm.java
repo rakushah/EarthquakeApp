@@ -92,11 +92,11 @@ public class SignUpForm {
 				 * .getText().toString()));
 				 */
 				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("name", "abc"));
-				nameValuePairs.add(new BasicNameValuePair("location", "abc"));
-				nameValuePairs.add(new BasicNameValuePair("email", "abc"));
+				nameValuePairs.add(new BasicNameValuePair("name", "Sanam"));
+				nameValuePairs.add(new BasicNameValuePair("location", "Patan"));
+				nameValuePairs.add(new BasicNameValuePair("email", "sanam.dongol@gmail.com"));
 				nameValuePairs.add(new BasicNameValuePair("password", "abc"));
-				nameValuePairs.add(new BasicNameValuePair("mobileno", "123"));
+				nameValuePairs.add(new BasicNameValuePair("mobileno", "9841984688"));
 				// Log.d("values", etName.getText().toString());
 
 				HttpClient httpclient = new DefaultHttpClient();

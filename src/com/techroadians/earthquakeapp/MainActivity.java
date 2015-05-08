@@ -1,20 +1,30 @@
 package com.techroadians.earthquakeapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
-//this is a change
+public class MainActivity extends ActionBarActivity implements OnClickListener {
 
-public class MainActivity extends ActionBarActivity {
+	private Button btnSignUp;
+	Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Log.d("hello", "hello");
+
+		initViews();
+		btnSignUp.setOnClickListener(this);
+	}
+
+	public void initViews() {
+		btnSignUp = (Button) findViewById(R.id.btnSignUp);
 	}
 
 	@Override
@@ -34,5 +44,20 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btnSignUp:
+			SignUpForm form = new SignUpForm(context);
+			form.Form();
+
+			break;
+
+		default:
+			break;
+		}
+
 	}
 }
