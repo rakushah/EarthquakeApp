@@ -47,4 +47,22 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher" />
 
+    <TextView
+        android:id="@+id/txtPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/ivUploadPhoto"
+        android:textSize="30dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/txtPercentage"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="35dp" 
+        android:visibility="gone"/>
 </RelativeLayout>
