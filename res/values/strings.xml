@@ -10,4 +10,12 @@
     <string name="btn_all">All</string>
     <string name="btn_signUp">Sign Up</string>
 
+    <!-- Sign up Form -->
+    <string name="et_Name">Enter Name</string>
+    <string name="et_Location">Enter Location</string>
+    <string name="et_Email">Enter Email</string>
+    <string name="et_Password">Enter Password</string>
+    <string name="et_MobileNo">Enter Mobile Number</string>
+    <string name="btn_Submit">Submit</string>
+
 </resources>
