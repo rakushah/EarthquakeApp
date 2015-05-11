@@ -26,6 +26,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <!-- Network State Permissions to detect Internet status -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".AppController"
@@ -54,7 +55,7 @@
             android:name=".ExpertActivity"
             android:label="@string/title_activity_expert" >
         </activity>
-      
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

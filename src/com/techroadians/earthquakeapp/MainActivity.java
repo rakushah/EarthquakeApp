@@ -1,5 +1,6 @@
 package com.techroadians.earthquakeapp;
 
+import android.content.Context;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -13,14 +14,14 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 
+
 import android.annotation.SuppressLint;
+
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +43,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -53,9 +55,10 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.techroadians.earthquakeapp.AndroidMultiPartEntity.ProgressListener;
 
-//this is a change
+@SuppressLint("NewApi") public class MainActivity extends ActionBarActivity  {
 
-@SuppressLint("NewApi") public class MainActivity extends ActionBarActivity {
+	private Button btnSignUp;
+
 	ImageView captureImage;
 	
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -69,30 +72,33 @@ import com.techroadians.earthquakeapp.AndroidMultiPartEntity.ProgressListener;
     long totalSize = 0;
 	// LogCat tag
 	private static final String TAG = MainActivity.class.getSimpleName();
-	
- 
-    // Camera activity request codes
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
-  
-    
-    public static final int MEDIA_TYPE_IMAGE = 1;
-   
- 
-    Uri fileUri; // file url to store image/video
-    String picturePath;
-    Uri selectedImage;
-    Bitmap photo;
+
+	// Camera activity request codes
+	private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
+
+	public static final int MEDIA_TYPE_IMAGE = 1;
+
+	Uri fileUri; // file url to store image/video
+	String picturePath;
+	Uri selectedImage;
+	Bitmap photo;
 	private TextView txtPercentage;
 	private ProgressBar progressBar;
 	private String imgPath;
+
 	Button allReview,userReview;
     String ba1;
     public static String URL = "Paste your URL here";
     Context context;
+
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		btnSignUp = (Button) findViewById(R.id.btnSignUp);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		captureImage = (ImageView) findViewById(R.id.ivUploadPhoto);
@@ -118,12 +124,13 @@ import com.techroadians.earthquakeapp.AndroidMultiPartEntity.ProgressListener;
 			}
 		});
 		captureImage.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				captureImage();
-				//Toast.makeText(getApplicationContext(), "ImageView Clicked", Toast.LENGTH_LONG).show();
+				// Toast.makeText(getApplicationContext(), "ImageView Clicked",
+				// Toast.LENGTH_LONG).show();
 			}
 		});
 		// Checking camera availability
@@ -149,7 +156,9 @@ import com.techroadians.earthquakeapp.AndroidMultiPartEntity.ProgressListener;
 			Log.i("TAG", "No valid Google Play Services APK found.");
 			Toast.makeText(getApplicationContext(), "No valid Google Play Services APK found.", Toast.LENGTH_SHORT).show();
 		}
+		
 	}
+
 
 	private void registerInBackground() {
 
@@ -276,109 +285,123 @@ import com.techroadians.earthquakeapp.AndroidMultiPartEntity.ProgressListener;
 		super.onResume();
 		checkPlayServices();
 
+		if (!isDeviceSupportCamera()) {
+			Toast.makeText(getApplicationContext(),
+					"Sorry! Your device doesn't support camera",
+					Toast.LENGTH_LONG).show();
+			// will close the app if the device does't have camera
+			finish();
+		}
+
 	}
-	  /**
-     * Checking device has camera hardware or not
-     * */
-    private boolean isDeviceSupportCamera() {
-        if (getApplicationContext().getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_CAMERA)) {
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
-    }
-    /**
-     * Launching camera app to capture image
-     */
-    private void captureImage() {
-    	   Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    	   
-    	   
-           intent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri());
 
-           // start the image capture Intent
-           startActivityForResult(intent, 100);
-    }
-    public Uri setImageUri() {
-        // Store image in dcim
-        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
-        Uri imgUri = Uri.fromFile(file);
-        this.imgPath = file.getAbsolutePath();
-        return imgUri;
-    }
+	/**
+	 * Checking device has camera hardware or not
+	 * */
+	private boolean isDeviceSupportCamera() {
+		if (getApplicationContext().getPackageManager().hasSystemFeature(
+				PackageManager.FEATURE_CAMERA)) {
+			// this device has a camera
+			return true;
+		} else {
+			// no camera on this device
+			return false;
+		}
+	}
 
+	/**
+	 * Launching camera app to capture image
+	 */
+	private void captureImage() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-    public String getImagePath() {
-        return imgPath;
-    }
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, setImageUri());
 
+		// start the image capture Intent
+		startActivityForResult(intent, 100);
+	}
 
-public String getAbsolutePath(Uri uri) {
-        String[] projection = { MediaColumns.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } else
-            return null;
-    }
+	public Uri setImageUri() {
+		// Store image in dcim
+		File file = new File(Environment.getExternalStorageDirectory()
+				+ "/DCIM/", "image" + new Date().getTime() + ".png");
+		Uri imgUri = Uri.fromFile(file);
+		this.imgPath = file.getAbsolutePath();
+		return imgUri;
+	}
 
-public Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
+	public String getImagePath() {
+		return imgPath;
+	}
 
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
+	public String getAbsolutePath(Uri uri) {
+		String[] projection = { MediaColumns.DATA };
+		@SuppressWarnings("deprecation")
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		} else
+			return null;
+	}
 
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeFile(path, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return null;
+	public Bitmap decodeFile(String path) {
+		try {
+			// Decode image size
+			BitmapFactory.Options o = new BitmapFactory.Options();
+			o.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(path, o);
+			// The new size we want to scale to
+			final int REQUIRED_SIZE = 70;
 
-    }
-    /**
-     * Receiving activity result method will be called after closing the camera
-     * */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // if the result is capturing Image
-    	  if (requestCode == 100 && resultCode == RESULT_OK) {
-    		  
-    		  String selectedImagePath = getImagePath();
-    	     captureImage.setImageBitmap(decodeFile(selectedImagePath));
-    	  
-    	     // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-    	       // Uri tempUri = getImageUri(MainActivity.this, image);
-   	        // CALL THIS METHOD TO GET THE ACTUAL PATH
-    	     Toast.makeText(getApplicationContext(), getImagePath(), Toast.LENGTH_LONG).show();
-    	     new UploadFileToServer().execute();
-    	        //File finalFile = new File(getRealPathFromURI(fileUri));
-    	       //Toast.makeText(getApplicationContext(), finalFile.toString(), Toast.LENGTH_LONG).show();
-          }
-    }
-    
+			// Find the correct scale value. It should be the power of 2.
+			int scale = 1;
+			while (o.outWidth / scale / 2 >= REQUIRED_SIZE
+					&& o.outHeight / scale / 2 >= REQUIRED_SIZE)
+				scale *= 2;
+
+			// Decode with inSampleSize
+			BitmapFactory.Options o2 = new BitmapFactory.Options();
+			o2.inSampleSize = scale;
+			return BitmapFactory.decodeFile(path, o2);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/**
+	 * Receiving activity result method will be called after closing the camera
+	 * */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// if the result is capturing Image
+		if (requestCode == 100 && resultCode == RESULT_OK) {
+
+			String selectedImagePath = getImagePath();
+			captureImage.setImageBitmap(decodeFile(selectedImagePath));
+
+			// CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+			// Uri tempUri = getImageUri(MainActivity.this, image);
+			// CALL THIS METHOD TO GET THE ACTUAL PATH
+			Toast.makeText(getApplicationContext(), getImagePath(),
+					Toast.LENGTH_LONG).show();
+			new UploadFileToServer().execute();
+			// File finalFile = new File(getRealPathFromURI(fileUri));
+			// Toast.makeText(getApplicationContext(), finalFile.toString(),
+			// Toast.LENGTH_LONG).show();
+		}
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 	/**
 	 * Uploading the file to server
 	 * */
@@ -415,25 +438,25 @@ public Bitmap decodeFile(String path) {
 			HttpPost httppost = new HttpPost(Config.FILE_UPLOAD_URL);
 
 			try {
-				AndroidMultiPartEntity entity = new AndroidMultiPartEntity(new ProgressListener() {
-					
-					public void transferred(long num) {
-						// TODO Auto-generated method stub
-						publishProgress((int) ((num / (float) totalSize) * 100));
-						
-					}
-				});
-			
+				AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
+						new ProgressListener() {
+
+							public void transferred(long num) {
+								// TODO Auto-generated method stub
+								publishProgress((int) ((num / (float) totalSize) * 100));
+
+							}
+						});
 
 				File sourceFile = new File(getImagePath());
 
 				// Adding file data to http body
 				entity.addPart("image", new FileBody(sourceFile));
 
-//				// Extra parameters if you want to pass to server
-//				entity.addPart("website",
-//						new StringBody("www.androidhive.info"));
-//				entity.addPart("email", new StringBody("abc@gmail.com"));
+				// // Extra parameters if you want to pass to server
+				// entity.addPart("website",
+				// new StringBody("www.androidhive.info"));
+				// entity.addPart("email", new StringBody("abc@gmail.com"));
 
 				totalSize = entity.getContentLength();
 				httppost.setEntity(entity);
@@ -464,7 +487,7 @@ public Bitmap decodeFile(String path) {
 		@Override
 		protected void onPostExecute(String result) {
 			Log.e(TAG, "Response from server: " + result);
-			//Toast.makeText(getApplicationContext(), text, duration)
+			// Toast.makeText(getApplicationContext(), text, duration)
 			// showing the server response in an alert dialog
 			showAlert(result);
 
@@ -472,6 +495,7 @@ public Bitmap decodeFile(String path) {
 		}
 
 	}
+
 	/**
 	 * Method to show alert dialog
 	 * */
@@ -499,4 +523,6 @@ public Bitmap decodeFile(String path) {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+
 }

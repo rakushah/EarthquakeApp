@@ -1476,7 +1476,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f080028;
         public static final int action_menu_presenter=0x7f080029;
         public static final int action_mode_close_button=0x7f080036;
-        public static final int action_settings=0x7f08005a;
+        public static final int action_settings=0x7f080060;
         public static final int activity_chooser_view_content=0x7f080037;
         public static final int always=0x7f08001e;
         public static final int beginning=0x7f080023;
@@ -1484,6 +1484,7 @@ containing a value of this type.
         public static final int btnAll=0x7f080053;
         public static final int btnMyReview=0x7f080052;
         public static final int btnSignUp=0x7f080054;
+        public static final int btnSubmit=0x7f08005f;
         public static final int buyButton=0x7f08000a;
         public static final int buy_now=0x7f08000f;
         public static final int buy_with_google=0x7f08000e;
@@ -1496,6 +1497,11 @@ containing a value of this type.
         public static final int dropdown=0x7f080022;
         public static final int edit_query=0x7f080042;
         public static final int end=0x7f080025;
+        public static final int etEmail=0x7f08005c;
+        public static final int etLocation=0x7f08005b;
+        public static final int etMobileNo=0x7f08005e;
+        public static final int etName=0x7f08005a;
+        public static final int etPassword=0x7f08005d;
         public static final int expand_activities_button=0x7f080038;
         public static final int expanded_menu=0x7f08003e;
         public static final int grayscale=0x7f080012;
@@ -1612,7 +1618,8 @@ containing a value of this type.
         public static final int newxaml=0x7f03001a;
         public static final int review_list=0x7f03001b;
         public static final int review_list_elements=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
+        public static final int signup=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class menu {
         public static final int expert=0x7f0c0000;
@@ -1663,6 +1670,7 @@ containing a value of this type.
         public static final int action_settings=0x7f060034;
         public static final int allReview=0x7f060031;
         public static final int app_name=0x7f060030;
+        public static final int btn_Submit=0x7f06003e;
         public static final int btn_all=0x7f060036;
         /**  Buttons at bottm 
          */
@@ -1770,6 +1778,13 @@ containing a value of this type.
         public static final int create_calendar_message=0x7f060005;
         public static final int create_calendar_title=0x7f060004;
         public static final int decline=0x7f060003;
+        public static final int et_Email=0x7f06003b;
+        public static final int et_Location=0x7f06003a;
+        public static final int et_MobileNo=0x7f06003d;
+        /**  Sign up Form 
+         */
+        public static final int et_Name=0x7f060039;
+        public static final int et_Password=0x7f06003c;
         public static final int hello_world=0x7f060033;
         public static final int store_picture_message=0x7f060001;
         public static final int store_picture_title=0x7f060000;
