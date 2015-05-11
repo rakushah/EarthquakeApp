@@ -2,12 +2,15 @@
 <resources>
 
     <string name="app_name">EarthquakeApp</string>
+    <string name="allReview">All Review</string>
+    <string name="userReview">User Review</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <!-- Buttons at bottm -->
     <string name="btn_myReview">My Review</string>
     <string name="btn_all">All</string>
-    <string name="btn_signUp">Sign Up</string>
+    <string name="btn_signUp">Sign In/Sign Up </string>
+    <string name="title_activity_expert">ExpertActivity</string>
 
 </resources>
